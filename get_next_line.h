@@ -6,7 +6,7 @@
 /*   By: rrasezin <rrasezin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:06:51 by rrasezin          #+#    #+#             */
-/*   Updated: 2022/11/04 18:20:32 by rrasezin         ###   ########.fr       */
+/*   Updated: 2022/11/04 19:47:47 by rrasezin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,19 @@
 
 # include <string.h>
 # include <unistd.h>
-
-BUFFER_SIZE = 10;
+# include <stdlib.h>
+# include <fcntl.h>
 
 char	*get_next_line(int fd);
-int		check_new_line(char *buffer);
-size_t	ft_strlen(const char *src);
+int		check_new_line(void *buffer);
+int		ft_strlen(const char *src);
 char	*ft_strjoin(char *first, char *last);
+char	*result_return(char	*reading);
+char	*save(char	*reading);
+
+#endif
+
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 50
 
 #endif
