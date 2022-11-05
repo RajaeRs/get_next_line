@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrasezin <rrasezin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/04 17:05:51 by rrasezin          #+#    #+#             */
-/*   Updated: 2022/11/05 17:56:26 by rrasezin         ###   ########.fr       */
+/*   Created: 2022/11/05 17:53:58 by rrasezin          #+#    #+#             */
+/*   Updated: 2022/11/05 18:07:16 by rrasezin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*new_line(char	*line)
 {
@@ -65,15 +65,15 @@ static char	*save(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*line[OPEN_MAX];
 	char		*buffer;
 	int			read_size;
 
 	read_size = 1;
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!line)
-		line = ft_calloc(1, 1);
+	if (!line[fd])
+		line[fd] = ft_calloc(1, 1);
 	buffer = ft_calloc (BUFFER_SIZE + 1, sizeof(char));
 	while (!(ft_strchr(buffer, '\n')) && read_size != 0)
 	{
@@ -81,10 +81,10 @@ char	*get_next_line(int fd)
 		if (read_size <= 0)
 			break ;
 		buffer[read_size] = '\0';
-		line = ft_strjoin(line, buffer);
+		line[fd] = ft_strjoin(line[fd], buffer);
 	}
 	free (buffer);
-	buffer = new_line(line);
-	line = save(line);
+	buffer = new_line(line[fd]);
+	line[fd] = save(line[fd]);
 	return (buffer);
 }
